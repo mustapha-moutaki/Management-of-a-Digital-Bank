@@ -8,18 +8,10 @@ public class Gestionnaire extends Person {
         this.idGestionnaire = idGestionnaire;
     }
 
-    /**
-     *
-     * @param idGestionnaire to set id of the banker
-     */
     public void setIdGestionnaire(String idGestionnaire){
         this.idGestionnaire = idGestionnaire;
     }
 
-    /**
-     *
-     * @return id of the banker
-     */
     public String getIdGestionnaire(){
         return this.idGestionnaire;
     }

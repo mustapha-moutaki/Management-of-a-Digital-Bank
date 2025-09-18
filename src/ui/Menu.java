@@ -79,7 +79,7 @@ public class Menu {
             System.out.println("============================");
             System.out.println("1) Register");
             System.out.println("2) Login/");
-            System.out.println("0) Back");
+            System.out.println("0) Exit");
             System.out.print("Choose an option: ");
             int cchoice = sc.nextInt();
             sc.nextLine();
