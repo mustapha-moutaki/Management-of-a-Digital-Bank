@@ -28,7 +28,7 @@ public class Menu {
                     displayGenstionnaireMenu();
                     break;
                 case 2:
-                    displayClientMenu();
+                    displayClientMenuRe();
                     break;
                 case 0:
                     System.out.println("good bye");
@@ -40,7 +40,7 @@ public class Menu {
     }
 
     public void displayGenstionnaireMenu(){
-    while(true) {
+        while(true) {
             System.out.println("============================");
             System.out.println("* Welcome in Banker space *");
             System.out.println("============================");
@@ -72,18 +72,45 @@ public class Menu {
             }
         }
     }
-    public void displayClientMenu(){
+    public void displayClientMenuRe(){
         while(true) {
             System.out.println("============================");
             System.out.println("* Welcome in Client space *");
             System.out.println("============================");
-            System.out.println("1) Login/Register");
-            System.out.println("2) Create account");
-            System.out.println("3) Deposit");
-            System.out.println("4) Withdraw");
-            System.out.println("5) Transfer");
-            System.out.println("6) Show balance & history");
-            System.out.println("7) Show all accounts");
+            System.out.println("1) Register");
+            System.out.println("2) Login/");
+            System.out.println("0) Back");
+            System.out.print("Choose an option: ");
+            int cchoice = sc.nextInt();
+            sc.nextLine();
+            switch (cchoice) {
+                case 1:
+                    System.out.println("Register");
+                    register();
+                    break;
+                case 2: login();
+                    break;
+
+                case 0:
+                    System.out.println("good bye");
+                    System.exit(0);
+                default:
+                    System.out.println("please select valid number ");
+            }
+        }
+    }
+
+    public void displayClientOperaMenu() {
+        while (true) {
+            System.out.println("============================");
+            System.out.println("* Welcome in Client space *");
+            System.out.println("============================");
+            System.out.println("1) Create account");
+            System.out.println("2) Deposit");
+            System.out.println("3) Withdraw");
+            System.out.println("4) Transfer");
+            System.out.println("5) Show balance & history");
+            System.out.println("6) Show all accounts");
             System.out.println("0) Back");
             System.out.print("Choose an option: ");
             int cchoice = sc.nextInt();
@@ -91,7 +118,7 @@ public class Menu {
             switch (cchoice) {
                 case 1:
                     System.out.println("create an count");
-                    LoginAndRegister();
+//                    LoginAndRegister();
                     break;
                 case 2:
                     break;
@@ -103,7 +130,7 @@ public class Menu {
                     double amount = sc.nextDouble();
                     sc.nextLine();
                     AccountService accountservice = new AccountService();
-                    accountservice.deposit(acc);
+//                    accountservice.deposit(acc);
                     break;
                 case 4:
                     break;
@@ -118,32 +145,17 @@ public class Menu {
         }
     }
 
-    public void LoginAndRegister(){
-        System.out.println("-----------");
-        System.out.println("1-login");
-        System.out.println("2-register");
-        System.out.println("selecte ur option: ");
-        int op = sc.nextInt();
-        sc.nextLine();
-        switch (op){
-            case 1:login();
-                break;
-            case 2:register();
-                break;
-            default:
-                System.out.println("invalid choice");;
-        }
-    }
     public void login(){
         System.out.println("enter ur client id:");
-         String clientId  = sc.nextLine();
-            ClientService clientService = new ClientService();
-         try{
-             clientService.findClient(clientId);
-             System.out.println("u have logged successfully");
-         }catch (AccountInexistantException e){
-             System.out.println(e.getMessage());
-         }
+        String clientId  = sc.nextLine();
+        ClientService clientService = new ClientService();
+        try{
+            clientService.findClient(clientId);
+            System.out.println("u have logged successfully");
+            this.displayClientOperaMenu();
+        }catch (AccountInexistantException e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public void register(){
@@ -162,6 +174,7 @@ public class Menu {
         System.out.println("u have registred successfully");
         System.out.println("welcome "+ newclient.getFirstName());
         System.out.println("ur client id: "+ newclient.getIdClient());
+        this.displayClientOperaMenu();
 
     }
 
