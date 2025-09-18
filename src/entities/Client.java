@@ -10,10 +10,8 @@ public class Client extends Person {
     //remove id and client id from the constructor to avoid require it in account creation
     public Client(String firstName, String lastName, String email, String password, HashMap<String, Account> accounts) {
         super(++counter, firstName, lastName, email, password);
-        this.idClient = "Mus"+counter;
-        this.accounts = accounts;
+        this.idClient = "Mus" + counter;
     }
-
 
     public String getIdClient() {
         return this.idClient;

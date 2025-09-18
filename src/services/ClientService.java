@@ -14,10 +14,12 @@ public class ClientService {
         clients.put(client.getIdClient(), client);
     }
     // to search for an account
-    public boolean findClient(String id){// return type is client to return client object
+
+    public Client findClient(String id){// return type is client to return client object
+
         if(id == null|| !clients.containsKey(id)){
             // if the id is null or is not exist in the hashmap
-            throw new AccountInexistantException("account with id:" + id +"is not exist");
+            throw new AccountInexistantException("account with id: " + id +" is not exist");
         }
         return clients.get(id);
     }
