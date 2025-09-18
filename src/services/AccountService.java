@@ -1,6 +1,10 @@
 package services;
 
 import entities.Account;
+import exceptions.AccountInexistantException;
+import exceptions.SoldInsuffisantException;
+
+import java.nio.channels.AcceptPendingException;
 
 public class AccountService {
 
@@ -8,16 +12,21 @@ public class AccountService {
         if(amount > 0){
             account.setSold(account.getSold()+ amount);
         }else{
-            System.out.println("please try again with positive amount");
+           throw new SoldInsuffisantException("try again with enough sold");
         }
     }
 
     public void withdraw(Account account, double amount){
-        if(amount > 0 && account.getSold() >= amount){
-            account.setSold(account.getSold() - amount);
-        }else{
-            System.out.println(" u don't have enough sold, please try again");
+        if (account == null) {
+            throw new AccountInexistantException("account is not exist !");
         }
+        if (amount <= 0) {
+            throw new IllegalArgumentException("amount is negative");
+        }
+        if (account.getSold() < amount) {
+            throw new SoldInsuffisantException("Sold is not enough!");
+        }
+        account.setSold(account.getSold() - amount);
     }
 
     public void transfer(Account source,Account destination, double amount){

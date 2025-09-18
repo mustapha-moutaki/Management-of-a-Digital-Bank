@@ -6,15 +6,15 @@ public class Account {
     private int id;
     private String accountNumber;
     private double sold;
-    private String accountType = "Courant";// Courant, Epargne
+    private AccountType accountType = AccountType.CURRENT;//deafult account type
 
     HashSet<Transaction>history = new HashSet<>();
 
-    Account(int id, String accountNumber, double sold, String accountType){
+    Account(int id, String accountNumber, double sold, AccountType accountType){
         this.id = id;
         this.accountNumber = accountNumber;
         this.sold = sold;
-        this.accountType = accountType;
+        this.accountType = accountType != null ? accountType : AccountType.CURRENT; ;
     }
 
     public void setId(int id){
@@ -26,7 +26,7 @@ public class Account {
     public void setSold(double sold){
         this.sold = sold;
     }
-    public void setTypeCompte(String accountType){
+    public void setTypeCompte(AccountType accountType){
         this.accountType = accountType;
     }
     public void setHistory(HashSet<Transaction> history){
