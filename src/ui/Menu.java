@@ -116,7 +116,7 @@ public class Menu {
             System.out.println("2) Deposit");
             System.out.println("3) Withdraw");
             System.out.println("4) Transfer");
-            System.out.println("5) Show balance & history");
+            System.out.println("5) Show balance");
             System.out.println("6) Show all accounts");
             System.out.println("0) Back");
             System.out.print("Choose an option: ");
@@ -183,6 +183,10 @@ public class Menu {
 
                     break;
                 case 5:
+                    System.out.println("--------balance------");
+                    Account srcAcc1 = clientLogged.getAccounts().get(accnumber);
+                    double balance = srcAcc1.getSold();
+                    System.out.println("your balance: "+ balance + "$");
                     break;
                 case 0:
                     System.out.println("good bye");
@@ -236,9 +240,7 @@ public class Menu {
         System.out.println("u have registred successfully");
         System.out.println("welcome "+ newclient.getFirstName());
         System.out.println("------------------warning-----------------");
-        System.out.println("ur account password:"+ newclient.getIdClient());
-
-        System.out.println("ur account id: "+ account.getAccountNumber());
+        System.out.println("|==>ur account password:"+ newclient.getIdClient());
         System.out.println("----------------------------------------------");
 
 //        this.displayClientOperaMenu();
