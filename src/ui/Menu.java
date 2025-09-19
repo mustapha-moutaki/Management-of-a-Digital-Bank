@@ -62,14 +62,18 @@ public class Menu {
             sc.nextLine();
             switch (gchoice) {
                 case 1:
+                    System.out.println("===search fro a client=====");
+                    System.out.println("enter account Number:");
+                    String accountNum = sc.nextLine();
+                    search(accountNum);
                     break;
-                case 2:
+                case 2: createAccountClient();
                     break;
-                case 3:
+                case 3: seeAllTransactions(String accountNumber);// we have to pass the id of the account
                     break;
-                case 4:
+                case 4: editClientInfo(String clientId);
                     break;
-                case 5:
+                case 5: blockClient(String clientId);
                     break;
                 case 0:
                     System.out.println("good bye");
@@ -125,19 +129,13 @@ public class Menu {
             switch (cchoice) {
                 case 1:
                     System.out.println("create an count");
-//                    LoginAndRegister();
                     break;
                 case 2:
-//                    Client c = null;
                     System.out.println("Enter amount: ");
                     double amount = sc.nextDouble();
                     sc.nextLine();
-//                    System.out.println("Enter account Number for comfirmation:");
-//                    String accNum = sc.nextLine();
                    Account acc = clientLogged.getAccounts().get(accnumber);
-
                     AccountService accServ = new AccountService();
-//                    accServ.deposit(acc, amount);
                     accServ.deposit(acc, amount);
                     System.out.println("* [Deposit]done with success *");
                     break;
@@ -247,6 +245,15 @@ public class Menu {
         System.out.println("now u can login");
         login();
 
+    }
+
+    public Account search(String accnumber){
+        ClientService clients = new ClientService();
+        for(Client client: clients.getClients().values()){
+            Account acc = client.getAccounts().get(accnumber);
+            return acc;
+        }
+        return null;
     }
 
 }
