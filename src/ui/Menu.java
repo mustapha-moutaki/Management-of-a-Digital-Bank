@@ -13,6 +13,7 @@ public class Menu {
     private Client clientLogged = null;
 //    ClientService clientServ = new ClientService();
     ClientService clientService = new ClientService();
+    String accnumber = null;
     Scanner sc = new Scanner(System.in);
 
     public void start(){
@@ -130,21 +131,27 @@ public class Menu {
                     System.out.println("Enter amount: ");
                     double amount = sc.nextDouble();
                     sc.nextLine();
-                    System.out.println("Enter account Number for comfirmation:");
-                    String accNum = sc.nextLine();
-                    Account acc = clientLogged.getAccounts().get(accNum);
+//                    System.out.println("Enter account Number for comfirmation:");
+//                    String accNum = sc.nextLine();
+                   Account acc = clientLogged.getAccounts().get(accnumber);
+
+                    //start
+//                    String num = clientLogged.getIdClient();
+                    //end
                     AccountService accServ = new AccountService();
+//                    accServ.deposit(acc, amount);
                     accServ.deposit(acc, amount);
-                    System.out.println("* done with success *");
+                    System.out.println("* [Deposit]done with success *");
                     break;
                 case 3:
-                    System.out.println("enter account number: ");
-                    int accNum1 = sc.nextInt();
-                    sc.nextLine();
+//                    System.out.println("enter account number: ");
+//                    int accNum1 = sc.nextInt();
+//                    sc.nextLine();
+
                     System.out.println("enter amount");
                     double amountD = sc.nextDouble();
                     sc.nextLine();
-                    Account acc1 = clientLogged.getAccounts().get(accNum1);
+                    Account acc1 = clientLogged.getAccounts().get(accnumber);
                     AccountService accServ2 = new AccountService();
                     accServ2.withdraw(acc1, amountD);
                     break;
@@ -200,10 +207,12 @@ public class Menu {
         clientService.addClient(newclient);
         Account account = new Account(0, AccountType.CURRENT);
         newclient.getAccounts().put(account.getAccountNumber(), account);// becasuse it's save key and value so we save the account number as string key and account value.
+        accnumber = account.getAccountNumber();
         System.out.println("u have registred successfully");
         System.out.println("welcome "+ newclient.getFirstName());
         System.out.println("------------------warning-----------------");
         System.out.println("ur account password:"+ newclient.getIdClient());
+
         System.out.println("ur account id: "+ account.getAccountNumber());
         System.out.println("----------------------------------------------");
 

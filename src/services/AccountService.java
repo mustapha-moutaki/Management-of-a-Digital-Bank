@@ -24,7 +24,8 @@ public class AccountService {
             throw new IllegalArgumentException("amount is negative");
         }
         if (account.getSold() < amount) {
-            throw new SoldInsuffisantException("Sold is not enough!");
+//            throw new SoldInsuffisantException("Sold is not enough!");
+            System.out.println("sold is not enough sir");
         }
         account.setSold(account.getSold() - amount);
     }
