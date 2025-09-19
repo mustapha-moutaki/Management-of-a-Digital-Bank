@@ -1,5 +1,7 @@
 package ui;
 
+import entities.Account;
+import entities.AccountType;
 import entities.Client;
 import exceptions.AccountInexistantException;
 import services.AccountService;
@@ -8,6 +10,9 @@ import services.ClientService;
 import java.util.Scanner;
 
 public class Menu {
+    private Client clientLogged = null;
+//    ClientService clientServ = new ClientService();
+    ClientService clientService = new ClientService();
     Scanner sc = new Scanner(System.in);
 
     public void start(){
@@ -121,16 +126,27 @@ public class Menu {
 //                    LoginAndRegister();
                     break;
                 case 2:
+//                    Client c = null;
+                    System.out.println("Enter amount: ");
+                    double amount = sc.nextDouble();
+                    sc.nextLine();
+                    System.out.println("Enter account Number for comfirmation:");
+                    String accNum = sc.nextLine();
+                    Account acc = clientLogged.getAccounts().get(accNum);
+                    AccountService accServ = new AccountService();
+                    accServ.deposit(acc, amount);
+                    System.out.println("* done with success *");
                     break;
                 case 3:
                     System.out.println("enter account number: ");
-                    int accNum = sc.nextInt();
+                    int accNum1 = sc.nextInt();
                     sc.nextLine();
                     System.out.println("enter amount");
-                    double amount = sc.nextDouble();
+                    double amountD = sc.nextDouble();
                     sc.nextLine();
-                    AccountService accountservice = new AccountService();
-//                    accountservice.deposit(acc);
+                    Account acc1 = clientLogged.getAccounts().get(accNum1);
+                    AccountService accServ2 = new AccountService();
+                    accServ2.withdraw(acc1, amountD);
                     break;
                 case 4:
                     break;
@@ -146,13 +162,24 @@ public class Menu {
     }
 
     public void login(){
+        System.out.println("--------Login--------");
         System.out.println("enter ur client id:");
         String clientId  = sc.nextLine();
-        ClientService clientService = new ClientService();
+        System.out.println("enter ur password:");
+        String pass  = sc.nextLine();
+        AccountService accser = new AccountService();
         try{
-            clientService.findClient(clientId);
-            System.out.println("u have logged successfully");
-            this.displayClientOperaMenu();
+            Client c = clientService.findClient(clientId);//here we find the client but we should look for account
+//            Account d = AccountService.findAccount()
+            if(c.getPassword().equals(pass)){
+                clientLogged = c;
+                System.out.println("u have logged successfully");
+                this.displayClientOperaMenu();
+            }else{
+                throw new AccountInexistantException("incorrect password or Id");
+            }
+
+
         }catch (AccountInexistantException e){
             System.out.println(e.getMessage());
         }
@@ -169,12 +196,20 @@ public class Menu {
         System.out.println("enter password:");
         String password = sc.nextLine();
         Client newclient = new Client(firstname, lastname, userEmail, password, null);
-        ClientService clientServ = new ClientService();
-        clientServ.addClient(newclient);
+//        ClientService clientService = new ClientService();
+        clientService.addClient(newclient);
+        Account account = new Account(0, AccountType.CURRENT);
+        newclient.getAccounts().put(account.getAccountNumber(), account);// becasuse it's save key and value so we save the account number as string key and account value.
         System.out.println("u have registred successfully");
         System.out.println("welcome "+ newclient.getFirstName());
-        System.out.println("ur client id: "+ newclient.getIdClient());
-        this.displayClientOperaMenu();
+        System.out.println("------------------warning-----------------");
+        System.out.println("ur account password:"+ newclient.getIdClient());
+        System.out.println("ur account id: "+ account.getAccountNumber());
+        System.out.println("----------------------------------------------");
+
+//        this.displayClientOperaMenu();
+        System.out.println("now u can login");
+        login();
 
     }
 

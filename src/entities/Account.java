@@ -5,20 +5,19 @@ import java.util.HashSet;
 public class Account {
 
     private static int counter = 100;// we made it static to save the old number
-
+    private static int extNum = 1000;
     private int id;
     private String accountNumber;
-    private double sold;
+    private double sold = 0;
     private AccountType accountType = AccountType.CURRENT;//deafult account type
 
     HashSet<Transaction>history = new HashSet<>();
 
-    Account(int id, String accountNumber, double sold, AccountType accountType){
+    public Account(double sold, AccountType accountType){
 
         this.id = ++counter;
-
-        this.accountNumber = accountNumber;
-        this.sold = sold;
+        this.accountNumber = "acc"+ (++extNum);
+        this.sold += sold;
         this.accountType = accountType != null ? accountType : AccountType.CURRENT; ;
     }
 
