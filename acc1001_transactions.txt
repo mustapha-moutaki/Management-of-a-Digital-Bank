@@ -1,0 +1,5 @@
+ID: T001 | Date: 2025-09-19 | Type: Deposit | Amount: 500.0 | Source: ACC1001 | Destination: null
+ID: T002 | Date: 2025-09-19 | Type: Withdraw | Amount: 200.0 | Source: ACC1001 | Destination: null
+ID: T003 | Date: 2025-09-19 | Type: Transfer | Amount: 300.0 | Source: ACC1001 | Destination: ACC2002
+ID: id1 | Date: 2025-09-19 | Type: deposit | Amount: 10.0 | Source: mus1 | Destination: mus2
+ID: id2 | Date: 2025-09-19 | Type: withdraw | Amount: 50.0 | Source: mus1 | Destination: mus2

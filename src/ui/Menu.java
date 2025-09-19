@@ -5,6 +5,7 @@ import entities.AccountType;
 import entities.Client;
 import exceptions.AccountInexistantException;
 import exceptions.SoldInsuffisantException;
+import repository.AccountRepository;
 import services.AccountService;
 import services.ClientService;
 
@@ -89,7 +90,13 @@ public class Menu {
                     }
                     createAccountClient(firstname, lastname, email, password, 0.0,accountype);
                     break;
-                case 3: //seeAllTransactions(String accountNumber);// we have to pass the id of the account
+                case 3:
+                    System.out.println("Enter account number: ");
+                    String accountNumn = sc.nextLine();
+
+                    AccountRepository repo = new AccountRepository();
+                    repo.showTransactions(accountNumn);
+
                     break;
                 case 4: //editClientInfo(String clientId);
                     break;
