@@ -67,13 +67,33 @@ public class Menu {
                     String accountNum = sc.nextLine();
                     search(accountNum);
                     break;
-                case 2: createAccountClient();
+                case 2:
+                    System.out.println("first name: ");
+                    String firstname= sc.nextLine();
+                    System.out.println("last name: ");
+                    String lastname= sc.nextLine();
+                    System.out.println("first name: ");
+                    String email= sc.nextLine();
+                    System.out.println("password: ");
+                    String password= sc.nextLine();
+                    System.out.println("account type:");
+                    System.out.println("1- current:");
+                    System.out.println("2- saving:");
+                    AccountType accountype = null;
+                    int choiceAcc= sc.nextInt();
+                    sc.nextLine();
+                    switch (choiceAcc){
+                        case 1:  accountype = AccountType.CURRENT;
+                        break;
+                        case 2:  accountype = AccountType.SAVINGS;
+                    }
+                    createAccountClient(firstname, lastname, email, password, 0.0,accountype);
                     break;
-                case 3: seeAllTransactions(String accountNumber);// we have to pass the id of the account
+                case 3: //seeAllTransactions(String accountNumber);// we have to pass the id of the account
                     break;
-                case 4: editClientInfo(String clientId);
+                case 4: //editClientInfo(String clientId);
                     break;
-                case 5: blockClient(String clientId);
+                case 5: //blockClient(String clientId);
                     break;
                 case 0:
                     System.out.println("good bye");
@@ -247,13 +267,22 @@ public class Menu {
 
     }
 
+    // for the gestionnaire
     public Account search(String accnumber){
         ClientService clients = new ClientService();
-        for(Client client: clients.getClients().values()){
+        for (Client client : clients.getClients().values()) {
             Account acc = client.getAccounts().get(accnumber);
-            return acc;
+            if (acc != null) return acc;
         }
         return null;
+    }
+
+    public void createAccountClient(String firstName, String lastName, String email, String password, double amount, AccountType accountType){
+        Client newClient = new Client(firstName, lastName, email, password, null);
+        Account account = new Account(amount, accountType);
+        clientService.addClient(newClient);
+        System.out.println("account number: ");
+        System.out.println(newClient.getIdClient());
     }
 
 }
