@@ -4,6 +4,7 @@ import entities.Account;
 import entities.AccountType;
 import entities.Client;
 import exceptions.AccountInexistantException;
+import exceptions.SoldInsuffisantException;
 import services.AccountService;
 import services.ClientService;
 
@@ -135,27 +136,51 @@ public class Menu {
 //                    String accNum = sc.nextLine();
                    Account acc = clientLogged.getAccounts().get(accnumber);
 
-                    //start
-//                    String num = clientLogged.getIdClient();
-                    //end
                     AccountService accServ = new AccountService();
 //                    accServ.deposit(acc, amount);
                     accServ.deposit(acc, amount);
                     System.out.println("* [Deposit]done with success *");
                     break;
                 case 3:
-//                    System.out.println("enter account number: ");
-//                    int accNum1 = sc.nextInt();
-//                    sc.nextLine();
-
                     System.out.println("enter amount");
                     double amountD = sc.nextDouble();
                     sc.nextLine();
                     Account acc1 = clientLogged.getAccounts().get(accnumber);
                     AccountService accServ2 = new AccountService();
                     accServ2.withdraw(acc1, amountD);
+                    System.out.println("* [withdraw]done with success *");
                     break;
                 case 4:
+                    System.out.println("------- --------");
+                    System.out.println("*  tranasfer   *");
+                    System.out.println("------- --------");
+                    System.out.println("enter amount: ");
+                    double transAmount = sc.nextDouble();
+                    sc.nextLine();
+                    Account srcAcc = clientLogged.getAccounts().get(accnumber);// to get the source account
+                    if(transAmount <= 0){
+                        throw new SoldInsuffisantException("amount must be positive");
+                    } else if (transAmount > (srcAcc.getSold())) {
+                        System.out.println("ur balance is not enough to complete this transaction");
+                        break;
+                    }
+                    System.out.println("enter Account Number: ");
+                    String accnumberdes = sc.nextLine();
+                    if(accnumber.equals(null)){
+                        throw new AccountInexistantException("the account number must be at least 5 numbers");
+                    }
+                    Account accdestination = AccountService.findAccountByNumber(accnumberdes);
+                    if(accdestination != null){
+                        /**
+                         * deposit in the account of the destinater
+                         * withraw from my account
+                         */
+
+                        AccountService accService = new AccountService();
+                        accService.deposit(accdestination, transAmount);//
+                        accService.withdraw(srcAcc, transAmount);
+                    }
+
                     break;
                 case 5:
                     break;

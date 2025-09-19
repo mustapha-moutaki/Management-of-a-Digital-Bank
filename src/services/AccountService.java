@@ -1,10 +1,13 @@
 package services;
 
 import entities.Account;
+import entities.Client;
 import exceptions.AccountInexistantException;
 import exceptions.SoldInsuffisantException;
 
 import java.nio.channels.AcceptPendingException;
+import java.util.Collection;
+import java.util.HashMap;
 
 public class AccountService {
 
@@ -28,10 +31,23 @@ public class AccountService {
             System.out.println("sold is not enough sir");
         }
         account.setSold(account.getSold() - amount);
+
     }
 
     public void transfer(Account source,Account destination, double amount){
         withdraw(source, amount);
         deposit(destination, amount);
     }
+
+        public static Account findAccountByNumber(String accNumb){
+            ClientService clientService = new ClientService();
+//            AccountService accountService = new AccountService();
+            HashMap<String ,Client> allClient = clientService.getClients();
+            for(Client client: allClient.values()){
+               if(client.getAccounts().containsKey(accNumb)){
+                   return client.getAccounts().get(accNumb);
+               }
+            }
+            return null;
+        }
 }

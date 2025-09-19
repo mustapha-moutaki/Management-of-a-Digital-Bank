@@ -30,4 +30,8 @@ public class ClientService {
         client.setLastName(lastName);
         client.setEmail(lastName);
     }
+
+    public HashMap<String, Client> getClients() {
+        return clients;
+    }
 }
