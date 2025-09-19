@@ -1,179 +1,148 @@
-# FinBank Solutions - Digital Banking System 🏦
+# Digital Bank Management System
 
-## 📋 Project Overview
+A Java-based console application for managing digital banking operations with separate interfaces for clients and bankers.
 
-FinBank Solutions is a Java console application that digitalizes banking account management for clients and managers. This system provides a simple, reliable, and secure tool for managing common financial operations while ensuring complete traceability.
-
-## 🎯 Objectives
-
-The application simulates digital banking account management, respecting business rules and object-oriented programming best practices through a console interface.
-
-## ✨ Main Features
-
-### 👥 For Clients:
-- ✅ **Account Balance Consultation** - Check available funds
-- ✅ **Deposits and Withdrawals** - Manage account transactions
-- ✅ **Money Transfers** - Transfer funds between accounts
-- ✅ **Bank Statement Consultation** - View transaction history from .txt files
-- ✅ **Multiple Account Management** - Handle different savings or expense accounts
-
-### 🏛️ For Managers (Bankers):
-- ✅ **Account Management** - Create, modify, and close client accounts
-- ✅ **Client Information Updates** - Maintain up-to-date client data
-- ✅ **Transaction Monitoring** - Consult any client's bank statement
-- ✅ **Client Search and Management** - Find and manage client profiles
-
-## 🔧 Business Rules
-
-- **One-to-Many Relationship**: A client can own multiple accounts
-- **Account Ownership**: Each account belongs to only one client
-- **Transaction History**: Each account maintains a complete transaction history
-- **File Logging**: Each operation is recorded in a unique .txt file per account
-- **Exception Handling**: Insufficient balance, non-existent account, negative amounts, file access issues
-
-## 📊 Entity Modeling (OOP)
-
-
-## 💻 Technical Architecture
-
-### Technologies Used:
-- **Language**: Java (OOP, Collections)
-- **Collections**: 
-  - `HashMap` for client account management
-  - `HashSet` for transaction history
-- **File Management**: Creating and reading .txt files for bank statements
-
-### Design Patterns:
-- **MVC Pattern**: Separation of concerns (Model, View, Controller)
-- **Service Layer Pattern**: Business logic encapsulation
-- **Exception Handling**: Custom exceptions for robust error management
-
-## 📝 Transaction Log Format
-
-Each account has its own transaction log file with the following format:
+## Project Structure
 
 ```
-Date | Type | Amount | Source Account | Destination Account
-2025-09-15 | Deposit | 100.00 € | null | C1001
-2025-09-16 | Withdrawal | 50.00 € | C1001 | null
-2025-09-17 | Transfer | 200.00 € | C1001 | C1002
+src/
+├── entities/
+│   ├── Person.java          # Abstract base class for all persons
+│   ├── Client.java          # Client entity extending Person
+│   ├── Gestionnaire.java    # Banker/Manager entity extending Person
+│   ├── Account.java         # Account entity with transaction history
+│   ├── AccountType.java     # Enum for account types (CURRENT, SAVINGS)
+│   └── Transaction.java     # Transaction entity for tracking operations
+├── exceptions/
+│   ├── AccountInexistantException.java  # Custom exception for non-existent accounts
+│   └── SoldInsuffisantException.java    # Custom exception for insufficient funds
+├── services/
+│   ├── ClientService.java   # Business logic for client operations
+│   └── AccountService.java  # Business logic for account operations
+├── repository/
+│   └── AccountRepository.java  # Data access layer for accounts
+├── ui/
+│   └── Menu.java           # User interface and menu system
+└── Main.java               # Application entry point
 ```
 
-## 🚀 Getting Started
+## Features
 
-### Prerequisites
-- Java JDK 8 or higher
-- IDE (IntelliJ IDEA, Eclipse, VS Code)
-- Git (optional)
+### Client Features
+- **User Authentication**: Login and registration system
+- **Account Management**:
+    - Create new accounts (Current or Savings)
+    - View all accounts
+    - Check account balance and transaction history
+- **Financial Operations**:
+    - Deposit money into accounts
+    - Withdraw money from accounts
+    - Transfer money between accounts
+- **Transaction History**: Complete transaction tracking with timestamps
 
-### Installation
+### Banker Features
+- *Coming Soon* - Banker interface for administrative operations
 
-1. **Clone the repository**
+## How to Run
+
+1. **Compile the project**:
    ```bash
-   git clone https://github.com/your-username/finbank-solutions.git
-   cd finbank-solutions
+   javac -d . src/entities/*.java src/exceptions/*.java src/services/*.java src/ui/*.java src/Main.java
    ```
 
-2. **Compile the project**
+2. **Run the application**:
    ```bash
-   javac -d bin src/**/*.java
+   java Main
    ```
 
-3. **Run the application**
-   ```bash
-   java -cp bin Main
-   ```
+## Usage Guide
 
-### Alternative: Using IDE
-1. Import the project into your preferred IDE
-2. Run the `Main.java` file
-3. Follow the console prompts
+### Getting Started
+1. Launch the application
+2. Choose your role:
+    - **Client**: For banking customers
+    - **Gestionnaire**: For bank staff (coming soon)
 
-## 🎮 How to Use
+### Client Operations
 
-### 🔐 First Time Setup
-1. Run the application
-2. Choose "Manager" mode to create initial client accounts
-3. Switch to "Client" mode to perform transactions
+#### 1. Login/Register
+- **Register**: Create a new client account with personal information
+- **Login**: Access existing client account using client ID
 
-### 👤 Client Operations
-1. **Login**: Use your client ID to access your accounts
-2. **View Balance**: Check your account balance
-3. **Make Deposit**: Add money to your account
-4. **Make Withdrawal**: Remove money (if sufficient balance)
-5. **Transfer Funds**: Move money between your accounts
-6. **View Statement**: Check your transaction history
+#### 2. Account Management
+- **Create Account**:
+    - Enter account number
+    - Set initial balance
+    - Choose account type (Current or Savings)
+- **View All Accounts**: See all accounts associated with your client profile
 
-### 🏛️ Manager Operations
-1. **Create Account**: Set up new client accounts
-2. **Update Client Info**: Modify client details
-3. **View Transactions**: Monitor client activities
-4. **Close Account**: Deactivate client accounts
+#### 3. Financial Operations
+- **Deposit**: Add money to any of your accounts
+- **Withdraw**: Remove money from accounts (with balance validation)
+- **Transfer**: Move money between your own accounts
 
-## 🛡️ Exception Handling
+#### 4. Account Information
+- **View Balance & History**:
+    - Check current account balance
+    - View complete transaction history
+    - See transaction details (date, type, amount, source, destination)
 
-The system handles the following exceptions:
+## Technical Details
 
-- **InsufficientSoldException**: Prevents overdrafts
-- **AccountNotFoundException**: Validates account existence
-- **FileAccessException**: Manages file operation errors
+### Key Classes
 
-## 📚 User Stories Implementation
+#### Client
+- Extends `Person` abstract class
+- Contains a HashMap of accounts
+- Unique client ID for identification
 
-### Client Stories ✅
-- [x] Transaction history per account
-- [x] Automatic .txt file logging
-- [x] Balance consultation
-- [x] Deposit/Withdrawal operations
-- [x] Bank statement consultation
-- [x] Insufficient balance error handling
-- [x] Negative amount validation
+#### Account
+- Supports multiple account types (Current, Savings)
+- Maintains transaction history using HashSet
+- Tracks balance and account details
 
-### Manager Stories ✅
-- [x] Single ownership per account
-- [x] Account creation/closure
-- [x] Client information updates
-- [x] Client bank statement access
+#### Transaction
+- Records all financial operations
+- Includes transaction type, amount, date, and account information
+- Supports deposits, withdrawals, and transfers
 
-### Developer Stories 
-- [x] Robust file access management
-- [x] Comprehensive exception handling
+#### ClientService
+- Manages client data using HashMap
+- Provides CRUD operations for clients
+- Handles client authentication and account management
 
-## 🎁 Bonus Features
+### Exception Handling
+- **AccountInexistantException**: Thrown when trying to access non-existent accounts
+- **SoldInsuffisantException**: Thrown when attempting operations with insufficient funds
 
-- **Premium Account Types**: Enhanced accounts with special benefits
-- **Transaction Categories**: Detailed transaction classification
-- **Account Interest Calculation**: Automatic interest for savings accounts
-- **Monthly Statements**: Automated monthly report generation
+## Future Enhancements
 
-## 🧪 Testing
+### Planned Features
+- **Banker Interface**: Complete administrative functionality for bank staff
+- **AccountService**: Enhanced business logic for account operations
+- **Database Integration**: Replace in-memory storage with persistent database
+- **Enhanced Security**: Password encryption and secure authentication
+- **Advanced Reporting**: Financial reports and analytics
+- **Multi-currency Support**: Support for different currencies
+- **Interest Calculations**: Automatic interest calculations for savings accounts
 
-### Manual Testing Scenarios
+## Development Notes
 
-1. **Account Creation Flow**
-   - Create manager account
-   - Create client with multiple accounts
-   - Verify account ownership
+- The application uses in-memory storage (HashMaps) for simplicity
+- All data is lost when the application is closed
+- Transaction IDs are generated using system timestamps
+- Account numbers are user-defined strings
+- The system supports multiple accounts per client
 
-2. **Transaction Flow**
-   - Perform deposits, withdrawals, transfers
-   - Verify balance updates
-   - Check transaction file generation
+## Requirements
 
-3. **Error Handling**
-   - Test insufficient balance scenarios
-   - Validate negative amount handling
-   - Test non-existent account access
+- Java 8 or higher
+- No external dependencies required
 
+## Contributing
 
-#### AccountService
-```java
-public class AccountService {
-    public void createAccount(Account account)
-    public Account findAccount(String accountNumber)
-    public void deposit(Account account, double amount)
-    public void withdraw(Account account, double amount)
-    public void transfer(Account source, Account destination, double amount)
-}
-```
+This is a learning project demonstrating object-oriented programming principles, exception handling, and basic banking system architecture in Java.
 
+## License
+
+This project is for educational purposes.
